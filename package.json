@@ -1,0 +1,14 @@
+{
+	"name": "workout-archive",
+	"version": "1.0.0",
+	"scripts": {
+		"server": "npm start --prefix backend",
+		"client": "npm start --prefix frontend",
+		"start": "concurrently \"npm run server\" \"npm run client\""
+	},
+	"author": "Nicklas Poulsen",
+	"license": "ISC",
+	"devDependencies": {
+		"concurrently": "^8.2.2"
+	}
+}
