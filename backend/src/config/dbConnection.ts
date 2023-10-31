@@ -9,7 +9,7 @@ export const connectDb = async () => {
 			console.error(err)
 			process.exit(1)
 		}
+	} else {
+		console.error('No valid connection string')
 	}
-
-	console.error('No valid connection string')
 }
