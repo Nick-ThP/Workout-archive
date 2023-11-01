@@ -1,10 +1,16 @@
 import dotenv from 'dotenv'
-import express from 'express'
+import express, { Application } from 'express'
 import { connectDb } from './config/dbConnection'
-import { errorHandler } from './middleware/errorHandler'
+import { errorMiddleware } from './middleware/errorMiddleware'
+import { userRoutes } from './routes/userRoutes'
 
-const app = express()
+// Initialization
+const app: Application = express()
+
+// Environment variables
 dotenv.config()
+
+// Database connection
 connectDb()
 
 // Parsing
@@ -12,11 +18,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Endpoints
-app.use('/api/users', require('./routes/userRoutes'))
-app.use('/api/workouts', require('./routes/workoutRoutes'))
+app.use('/api/users', userRoutes)
+// app.use('/api/workouts', require('./routes/workoutRoutes'))
 
-// Error Middleware
-app.use(errorHandler)
+// Error middleware
+app.use(errorMiddleware)
 
 // Spin-up
 const port = process.env.PORT || 5000
