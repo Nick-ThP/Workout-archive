@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
-import { ObjectId } from 'mongodb'
+import { User } from './types'
 
-export const generateToken = (id: ObjectId) => {
-	return jwt.sign({ id }, process.env.JWT_SECRET as string, {
+export const generateToken = (user: User) => {
+	return jwt.sign({ user }, process.env.JWT_SECRET as string, {
 		expiresIn: '30d',
 	})
 }

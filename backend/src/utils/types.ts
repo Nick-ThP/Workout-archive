@@ -1,10 +1,11 @@
 import { Request } from 'express'
+import { ObjectId } from 'mongodb'
 
 export interface User {
-	email: string
 	username?: string
-	id?: string
+	email?: string
 	password?: string
+	id?: ObjectId
 }
 
 export interface ExtendedRequest extends Request {

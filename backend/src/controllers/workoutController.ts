@@ -52,7 +52,7 @@ export const getWorkout = asyncHandler(async (req: ExtendedRequest, res) => {
 	}
 
 	// Check that user has permission
-	if (workout?.user_id.toString() !== req.user?.id) {
+	if (workout?.user_id !== req.user?.id) {
 		res.status(403)
 		throw new Error('User not authorized')
 	}
@@ -79,7 +79,7 @@ export const updateWorkout = asyncHandler(async (req: ExtendedRequest, res) => {
 	}
 
 	// Check that user has permission
-	if (workout?.user_id.toString() !== req.user?.id) {
+	if (workout?.user_id !== req.user?.id) {
 		res.status(403)
 		throw new Error('User not authorized')
 	}
@@ -107,7 +107,7 @@ export const deleteWorkout = asyncHandler(async (req: ExtendedRequest, res) => {
 	}
 
 	// Check that user has permission
-	if (workout.user_id.toString() !== req.user.id) {
+	if (workout.user_id !== req.user.id) {
 		res.status(403)
 		throw new Error('User not authorized')
 	}

@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt'
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel'
-import { ExtendedRequest } from '../utils/types'
 import { generateToken } from '../utils/generateToken'
+import { ExtendedRequest } from '../utils/types'
 
 //@desc Register a user
 //@route POST /api/users/register
@@ -35,10 +35,10 @@ export const registerUser = asyncHandler(async (req, res) => {
 	// Send a response with new user object including token
 	if (user) {
 		res.status(201).json({
-			_id: user.id,
+			id: user.id,
 			username: user.username,
 			email: user.email,
-			token: generateToken(user._id),
+			token: generateToken({ username, id: user._id }),
 		})
 	} else {
 		res.status(400)
@@ -68,7 +68,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 
 	// Compare user's password with hashed and create a token
 	if (user && (await bcrypt.compare(password, user.password))) {
-		res.status(200).json(generateToken(user._id))
+		res.status(200).json(generateToken({ username: user.username, id: user._id }))
 	} else {
 		res.status(401)
 		throw new Error('Password is not valid')
@@ -80,5 +80,5 @@ export const loginUser = asyncHandler(async (req, res) => {
 //@access private
 export const currentUser = asyncHandler(async (req: ExtendedRequest, res) => {
 	// Give the user their stored information
-	res.json(req.user)
+	res.status(200).json(req.user)
 })
