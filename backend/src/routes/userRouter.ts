@@ -2,8 +2,8 @@ import express from 'express'
 import { currentUser, loginUser, registerUser } from '../controllers/userController'
 import { authMiddleware } from '../middleware/authMiddleware'
 
-export const userRoutes = express.Router()
+export const userRouter = express.Router()
 
-userRoutes.post('/register', registerUser)
-userRoutes.post('/login', loginUser)
-userRoutes.get('/current', authMiddleware, currentUser)
+userRouter.post('/register', registerUser)
+userRouter.post('/login', loginUser)
+userRouter.get('/current', authMiddleware, currentUser)

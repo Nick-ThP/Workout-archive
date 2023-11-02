@@ -2,7 +2,8 @@ import dotenv from 'dotenv'
 import express, { Application } from 'express'
 import { connectDb } from './config/dbConnection'
 import { errorMiddleware } from './middleware/errorMiddleware'
-import { userRoutes } from './routes/userRoutes'
+import { userRouter } from './routes/userRouter'
+import { workoutRouter } from './routes/workoutRouter'
 
 // Initialization
 const app: Application = express()
@@ -18,8 +19,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Endpoints
-app.use('/api/users', userRoutes)
-// app.use('/api/workouts', require('./routes/workoutRoutes'))
+app.use('/api/users', userRouter)
+app.use('/api/workouts', workoutRouter)
 
 // Error middleware
 app.use(errorMiddleware)

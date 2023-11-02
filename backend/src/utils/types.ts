@@ -1,9 +1,10 @@
 import { Request } from 'express'
 
 export interface User {
-	username?: string
 	email: string
-	password: string
+	username?: string
+	id?: string
+	password?: string
 }
 
 export interface ExtendedRequest extends Request {
