@@ -29,7 +29,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 	const user = await User.create({
 		username,
 		email,
-		password: hashedPassword,
+		password: hashedPassword
 	})
 
 	// Send a response with new user object including token
@@ -38,7 +38,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 			id: user.id,
 			username: user.username,
 			email: user.email,
-			token: generateToken({ username, id: user._id }),
+			token: generateToken({ username, id: user._id })
 		})
 	} else {
 		res.status(400)

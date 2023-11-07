@@ -5,15 +5,15 @@ const workoutSchema = new Schema(
 		user_id: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: true,
-			ref: 'User',
+			ref: 'User'
 		},
 		calories: {
 			type: Number,
-			required: [true, 'Please specify amount of calories burned'],
-		},
+			required: [true, 'Please specify amount of calories burned']
+		}
 	},
 	{
-		timestamps: true,
+		timestamps: true
 	}
 )
 

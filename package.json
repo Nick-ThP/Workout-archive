@@ -4,7 +4,8 @@
 	"scripts": {
 		"server": "npm start --prefix backend",
 		"client": "npm start --prefix frontend",
-		"start": "concurrently \"npm run server\" \"npm run client\""
+		"start": "concurrently \"npm run server\" \"npm run client\"",
+		"format": "prettier-eslint --write \"{,!(node_modules)/**/}*.{js,jsx,ts,tsx,html,css,json}\""
 	},
 	"author": "Nicklas Poulsen",
 	"license": "ISC",
@@ -16,6 +17,7 @@
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-prettier": "^5.0.1",
 		"eslint-plugin-react": "^7.33.2",
-		"prettier": "^3.0.3"
+		"prettier": "^3.0.3",
+		"prettier-eslint-cli": "^8.0.1"
 	}
 }

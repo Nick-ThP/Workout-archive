@@ -27,7 +27,7 @@ export const createWorkout = asyncHandler(async (req: ExtendedRequest, res) => {
 	// Create the workout in the database
 	const workout = await Workout.create({
 		user_id: req.user?.id,
-		calories,
+		calories
 	})
 
 	// Send back the workout
