@@ -2,20 +2,18 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { login, reset } from '../features/auth/authSlice'
+import { login, reset } from '../redux/features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
-const Login = () => {
+export const Login = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     })
-
-    const { email, password } = formData
+	const { email, password } = formData
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
     const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
     useEffect(() => {
@@ -38,13 +36,13 @@ const Login = () => {
     const onSubmit = (e) => {
         e.preventDefault()
         const userData = {
-            email, 
+            email,
             password
         }
         dispatch(login(userData))
     }
 
-    if(isLoading) {
+    if (isLoading) {
         return <Spinner />
     }
 
@@ -54,30 +52,30 @@ const Login = () => {
                 <h1 className='flex'>
                     Log in
                 </h1>
-                <p>Log in to pin your goals</p>
+                <p>Log in to start tracking your workouts</p>
             </section>
             <section className="form">
                 <form onSubmit={onSubmit}>
                     <div className="form-group">
-                        <input 
-                            type="email" 
-                            className="form-control" 
-                            id="email" 
-                            name="email" 
-                            value={email} 
+                        <input
+                            type="email"
+                            className="form-control"
+                            id="email"
+                            name="email"
+                            value={email}
                             placeholder='Enter your email'
-                            onChange={onChange} 
+                            onChange={onChange}
                         />
                     </div>
                     <div className="form-group">
-                        <input 
-                            type="password" 
-                            className="form-control" 
-                            id="password" 
-                            name="password" 
-                            value={password} 
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="password"
+                            name="password"
+                            value={password}
                             placeholder='Enter password'
-                            onChange={onChange} 
+                            onChange={onChange}
                         />
                     </div>
                     <div className="form-group">
@@ -88,5 +86,3 @@ const Login = () => {
         </>
     )
 }
-
-export default Login

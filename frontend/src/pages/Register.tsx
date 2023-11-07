@@ -2,22 +2,20 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { register, reset } from '../features/auth/authSlice'
+import { register, reset } from '../redux/features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
-const Register = () => {
+export const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
         password2: ''
     })
-
     const { name, email, password, password2 } = formData
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
     const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
     useEffect(() => {
@@ -43,15 +41,15 @@ const Register = () => {
             toast.error('Passwords do not match')
         } else {
             const userData = {
-                name, 
-                email, 
+                name,
+                email,
                 password
             }
             dispatch(register(userData))
         }
     }
 
-    if(isLoading) {
+    if (isLoading) {
         return <Spinner />
     }
 
@@ -66,47 +64,47 @@ const Register = () => {
             <section className="form">
                 <form onSubmit={onSubmit}>
                     <div className="form-group">
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="name" 
-                            name="name" 
-                            value={name} 
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            name="name"
+                            value={name}
                             placeholder='Enter your name'
-                            onChange={onChange} 
+                            onChange={onChange}
                         />
                     </div>
                     <div className="form-group">
-                        <input 
-                            type="email" 
-                            className="form-control" 
-                            id="email" 
-                            name="email" 
-                            value={email} 
+                        <input
+                            type="email"
+                            className="form-control"
+                            id="email"
+                            name="email"
+                            value={email}
                             placeholder='Enter your email'
-                            onChange={onChange} 
+                            onChange={onChange}
                         />
                     </div>
                     <div className="form-group">
-                        <input 
-                            type="password" 
-                            className="form-control" 
-                            id="password" 
-                            name="password" 
-                            value={password} 
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="password"
+                            name="password"
+                            value={password}
                             placeholder='Enter password'
-                            onChange={onChange} 
+                            onChange={onChange}
                         />
                     </div>
                     <div className="form-group">
-                        <input 
-                            type="password" 
-                            className="form-control" 
-                            id="password2" 
-                            name="password2" 
-                            value={password2} 
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="password2"
+                            name="password2"
+                            value={password2}
                             placeholder='Confirm password'
-                            onChange={onChange} 
+                            onChange={onChange}
                         />
                     </div>
                     <div className="form-group">
@@ -117,5 +115,3 @@ const Register = () => {
         </>
     )
 }
-
-export default Register

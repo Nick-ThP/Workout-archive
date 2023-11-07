@@ -1,0 +1,173 @@
+{
+	"gitlens.menus": {
+		"editor": {
+			"blame": false,
+			"clipboard": true,
+			"compare": true,
+			"history": false,
+			"remote": false
+		},
+		"editorGroup": {
+			"blame": false,
+			"compare": false
+		},
+		"editorTab": {
+			"clipboard": true,
+			"compare": true,
+			"history": true,
+			"remote": true
+		},
+		"explorer": {
+			"clipboard": true,
+			"compare": true,
+			"history": true,
+			"remote": true
+		},
+		"scm": {
+			"authors": true
+		},
+		"scmGroupInline": {
+			"stash": true
+		},
+		"scmGroup": {
+			"compare": true,
+			"openClose": true,
+			"stash": true
+		},
+		"scmItem": {
+			"clipboard": true,
+			"compare": true,
+			"history": true,
+			"remote": false,
+			"stash": true
+		}
+	},
+	// "workbench.colorTheme": "Material Theme High Contrast",
+	"workbench.iconTheme": "material-icon-theme",
+	"workbench.startupEditor": "none",
+	"workbench.editor.decorations.colors": false,
+	"workbench.activityBar.location": "hidden",
+	"workbench.editor.empty.hint": "hidden",
+	"workbench.layoutControl.enabled": false,
+	"workbench.colorCustomizations": {
+		"[Material Theme High Contrast]": {
+			"editor.background": "#222d32",
+			"titleBar.activeForeground": "#192227",
+			"titleBar.inactiveForeground": "#263238",
+			"titleBar.inactiveBackground": "#263238",
+			"statusBar.foreground": "#7894a1",
+			"sideBar.foreground": "#7894a1",
+			"sideBarSectionHeader.foreground": "#7894a1",
+			"sideBarTitle.foreground": "#b0bec5",
+			"list.activeSelectionBackground": "#2d3d46",
+			"list.inactiveSelectionBackground": "#2d3d46",
+			"tab.activeForeground": "#80cbc4",
+			"tab.unfocusedActiveForeground": "#b0bec5",
+			"tab.activeBackground": "#2d3d46",
+			"tab.unfocusedActiveBackground": "#2d3d46",
+			"tab.inactiveForeground": "#7894a1",
+			"tab.unfocusedInactiveForeground": "#7894a1",
+			"tab.unfocusedActiveBorder": "#2d3d46",
+			"editorHoverWidget.background": "#192227",
+			"editorLineNumber.activeForeground": "#7894a1",
+			"editorIndentGuide.activeBackground": "#7894a1",
+			"panelTitle.inactiveForeground": "#b0bec5",
+			"panelTitle.activeForeground": "#80cbc4"
+		},
+		"editorBracketHighlight.foreground1": "#ffe700",
+		"editorBracketHighlight.foreground2": "#001eff",
+		"editorBracketHighlight.foreground3": "#f000ff",
+		"editorBracketHighlight.foreground4": "#4deeea",
+		"editorBracketHighlight.foreground5": "#74ee15",
+		"editorBracketHighlight.unexpectedBracket.foreground": "#ff0000"
+	},
+	"editor.tokenColorCustomizations": {
+		"[Material Theme High Contrast]": {
+			"textMateRules": [
+				{
+					"name": "Object Properties",
+					"scope": [
+						"variable.other.property.tsx",
+						"variable.other.property.jsx",
+						"variable.other.property.ts",
+						"variable.other.property.js"
+					],
+					"settings": {
+						"foreground": "#b2ccd6"
+					}
+				},
+				{
+					"name": "JSON Properties",
+					"scope": ["support.type.property-name.json.comments"],
+					"settings": {
+						"foreground": "#c792ea"
+					}
+				}
+			]
+		}
+	},
+	"editor.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
+	"editor.fontLigatures": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.snippetSuggestions": "top",
+	"editor.wordWrap": "on",
+	"editor.renderWhitespace": "none",
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"editor.minimap.enabled": false,
+	"editor.minimap.scale": 3,
+	"editor.fontSize": 15,
+	"editor.codeActionsOnSave": {
+		"source.fixAll": true,
+		"source.sortImports": true
+	},
+	"editor.mouseWheelScrollSensitivity": 3,
+	"editor.cursorWidth": 3,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"editor.unicodeHighlight.ambiguousCharacters": false,
+	"editor.bracketPairColorization.enabled": false,
+	"explorer.confirmDelete": false,
+	"explorer.confirmDragAndDrop": false,
+	"explorer.decorations.colors": false,
+	"extensions.ignoreRecommendations": true,
+	"prettier.jsxSingleQuote": true,
+	"prettier.singleQuote": true,
+	"prettier.useTabs": true,
+	"prettier.tabWidth": 4,
+	"prettier.printWidth": 140,
+	"prettier.semi": false,
+	"material-icon-theme.activeIconPack": "react_redux",
+	"material-icon-theme.folders.theme": "classic",
+	"material-icon-theme.folders.color": "#ffcb6b",
+	"material-icon-theme.hidesExplorerArrows": true,
+	"material-icon-theme.files.associations": {
+		"**.test.tsx": "test-ts"
+	},
+	"git.confirmSync": false,
+	"git.enableSmartCommit": true,
+	"git.autofetch": true,
+	"liveServer.settings.donotShowInfoMsg": true,
+	"window.menuBarVisibility": "compact",
+	"window.commandCenter": false,
+	"files.autoSave": "onFocusChange",
+	"files.trimTrailingWhitespace": true,
+	"files.associations": {
+		".database": "json"
+	},
+	"breadcrumbs.enabled": false,
+	"search.decorations.colors": false,
+	"http.proxySupport": "off",
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"json.validate.enable": false,
+	"turboConsoleLog.logMessagePrefix": "📡",
+	"codesnap.showWindowControls": false,
+	"i18n-ally.extract.autoDetect": true,
+	"i18n-ally.extract.keygenStyle": "camelCase",
+	"i18n-ally.fullReloadOnChanged": true,
+	"i18n-ally.dirStructure": "dir",
+	"i18n-ally.enabledFrameworks": ["react", "general"]
+}
+
+// this is a comment

@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { getWorkouts, reset } from '../redux/features/workouts/workoutSlice'
 import { toast } from 'react-toastify'
-import WorkoutForm from '../components/WorkoutForm'
-import WorkoutItem from '../components/WorkoutItem'
-import Spinner from '../components/Spinner'
+import { Spinner } from '../components/Spinner'
+import { WorkoutForm } from '../components/WorkoutForm'
+import { WorkoutItem } from '../components/WorkoutItem'
+import { getWorkouts, reset } from '../redux/features/workouts/workoutSlice'
 import { AppDispatch, RootState } from '../redux/store'
 
-const Dashboard = () => {
+export const Dashboard = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch<AppDispatch>()
 	const { user } = useSelector((state: RootState) => state.auth)
@@ -46,11 +46,9 @@ const Dashboard = () => {
 						))}
 					</div>
 				) : (
-					<h3>You have not pinned any workouts</h3>
+					<h3>You have not archived any workouts</h3>
 				)}
 			</section>
 		</>
 	)
 }
-
-export default Dashboard
