@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { Workout, workoutPutPackage } from '../../../utils/types'
+import { CreatedWorkout, Workout, workoutPutPackage } from '../../../utils/types'
+import { RootState } from '../../store'
 import { workoutService } from './workoutService'
 
 interface WorkoutState {
-	workouts: Workout[]
+	workouts: CreatedWorkout[]
 	isError: boolean
 	isSuccess: boolean
 	isLoading: boolean
@@ -21,8 +22,12 @@ const initialState: WorkoutState = {
 // Create new workout
 export const createWorkout = createAsyncThunk('workouts/create', async (workout: Workout, thunkAPI) => {
 	try {
-		const token = thunkAPI.getState().auth.user.token as string
-		return await workoutService.createWorkout(workout, token)
+		const token: string | undefined = (thunkAPI.getState() as RootState).auth.user?.token
+		if (token) {
+			return await workoutService.createWorkout(workout, token)
+		}
+
+		throw new Error('No token available')
 	} catch (error: any) {
 		const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
 		return thunkAPI.rejectWithValue(message)
@@ -32,8 +37,12 @@ export const createWorkout = createAsyncThunk('workouts/create', async (workout:
 // Get user workouts
 export const getWorkouts = createAsyncThunk('workouts/getAll', async (_, thunkAPI) => {
 	try {
-		const token = thunkAPI.getState().auth.user.token
-		return await workoutService.getWorkouts(token)
+		const token: string | undefined = (thunkAPI.getState() as RootState).auth.user?.token
+		if (token) {
+			return await workoutService.getWorkouts(token)
+		}
+
+		throw new Error('No token available')
 	} catch (error: any) {
 		const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
 		return thunkAPI.rejectWithValue(message)
@@ -43,8 +52,12 @@ export const getWorkouts = createAsyncThunk('workouts/getAll', async (_, thunkAP
 // Update workout
 export const updateWorkout = createAsyncThunk('workouts/update', async ({ workoutId, workoutData }: workoutPutPackage, thunkAPI) => {
 	try {
-		const token = thunkAPI.getState().auth.user.token
-		return await workoutService.updateWorkout(workoutId, workoutData, token)
+		const token: string | undefined = (thunkAPI.getState() as RootState).auth.user?.token
+		if (token) {
+			return await workoutService.updateWorkout(workoutId, workoutData, token)
+		}
+
+		throw new Error('No token available')
 	} catch (error: any) {
 		const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
 		return thunkAPI.rejectWithValue(message)
@@ -52,10 +65,14 @@ export const updateWorkout = createAsyncThunk('workouts/update', async ({ workou
 })
 
 // Delete user workout
-export const deleteWorkout = createAsyncThunk('workouts/delete', async (id, thunkAPI) => {
+export const deleteWorkout = createAsyncThunk('workouts/delete', async (workoutId: string, thunkAPI) => {
 	try {
-		const token = thunkAPI.getState().auth.user.token
-		return await workoutService.deleteWorkout(id, token)
+		const token: string | undefined = (thunkAPI.getState() as RootState).auth.user?.token
+		if (token) {
+			return await workoutService.deleteWorkout(workoutId, token)
+		}
+
+		throw new Error('No token available')
 	} catch (error: any) {
 		const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
 		return thunkAPI.rejectWithValue(message)

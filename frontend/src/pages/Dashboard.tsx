@@ -34,7 +34,7 @@ export const Dashboard = () => {
 	return (
 		<>
 			<section className='heading'>
-				<h1 className='welcome'>Welcome {user && user.name}</h1>
+				<h1 className='welcome'>Welcome {user && user.username}</h1>
 				<p>Workouts Dashboard</p>
 			</section>
 			<WorkoutForm />

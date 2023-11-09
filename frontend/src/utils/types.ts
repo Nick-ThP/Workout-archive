@@ -1,9 +1,14 @@
 export interface Workout {
+	user_id?: string
+	calories: string
+	createdAt?: Date
+	updatedAt?: Date
+}
+
+export interface CreatedWorkout extends Workout {
 	_id: string
-	user_id: string
-	calories: number
 	createdAt: Date
-	updatedAt: Date
+	updatedAt?: Date
 }
 
 export interface User {
@@ -11,6 +16,7 @@ export interface User {
 	email?: string
 	password?: string
 	id?: string
+	token?: string
 }
 
 export interface workoutPutPackage {

@@ -10,9 +10,8 @@ interface UserState {
 	message: string
 }
 
-const user = localStorage.getItem('user') as User || null
 const initialState: UserState = {
-	user: user,
+	user: (localStorage.getItem('user') as User) || null,
 	isError: false,
 	isSuccess: false,
 	isLoading: false,

@@ -1,14 +1,13 @@
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import { logout, reset } from '../redux/features/auth/authSlice'
 import { AppDispatch, RootState } from '../redux/store'
 
 export const Header = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch<AppDispatch>()
-	const { user } = useSelector<RootState>((state) => state.auth)
+	const { user } = useSelector((state: RootState) => state.auth)
 
 	const onLogout = () => {
 		dispatch(logout())

@@ -2,10 +2,10 @@ import { FaTimesCircle } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { deleteWorkout } from '../redux/features/workouts/workoutSlice'
 import { AppDispatch } from '../redux/store'
-import { Workout } from '../utils/types'
+import { CreatedWorkout } from '../utils/types'
 
 type Props = {
-	workout: Workout
+	workout: CreatedWorkout
 }
 
 export const WorkoutItem = (props: Props) => {

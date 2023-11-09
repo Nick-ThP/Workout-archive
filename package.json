@@ -5,7 +5,7 @@
 		"server": "npm start --prefix backend",
 		"client": "npm start --prefix frontend",
 		"start": "concurrently \"npm run server\" \"npm run client\"",
-		"format": "prettier-eslint --write \"{,!(node_modules)/**/}*.{js,jsx,ts,tsx,html,css,json}\""
+		"format": "prettier-eslint --write \"{,!(node_modules)/**/}*.{js,jsx,ts,tsx,css}\""
 	},
 	"author": "Nicklas Poulsen",
 	"license": "ISC",

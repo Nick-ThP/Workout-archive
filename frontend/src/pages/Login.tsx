@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { Spinner } from '../components/Spinner'
 import { login, reset } from '../redux/features/auth/authSlice'
-import Spinner from '../components/Spinner'
+import { AppDispatch, RootState } from '../redux/store'
 
 export const Login = () => {
 	const [formData, setFormData] = useState({
@@ -13,8 +14,8 @@ export const Login = () => {
 	const { email, password } = formData
 
 	const navigate = useNavigate()
-	const dispatch = useDispatch()
-	const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+	const dispatch = useDispatch<AppDispatch>()
+	const { user, isLoading, isError, isSuccess, message } = useSelector((state: RootState) => state.auth)
 
 	useEffect(() => {
 		if (isError) {
@@ -26,14 +27,14 @@ export const Login = () => {
 		dispatch(reset())
 	}, [user, isError, isSuccess, message, navigate, dispatch])
 
-	const onChange = (e) => {
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData((prevState) => ({
 			...prevState,
 			[e.target.name]: e.target.value
 		}))
 	}
 
-	const onSubmit = (e) => {
+	const onSubmit = (e: React.FormEvent<HTMLElement>) => {
 		e.preventDefault()
 		const userData = {
 			email,
