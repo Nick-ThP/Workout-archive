@@ -16,7 +16,12 @@
 	"plugins": ["prettier", "@typescript-eslint", "react"],
 	"extends": ["prettier", "eslint:recommended", "plugin:react/recommended"],
 	"rules": {
-		"prettier/prettier": "error"
+		"prettier/prettier": [
+			"error",
+			{
+				"endOfLine": "auto"
+			}
+		]
 	},
 	"settings": {
 		"react": {
