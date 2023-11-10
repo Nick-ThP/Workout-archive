@@ -14,6 +14,7 @@ export const Register = () => {
 		password: '',
 		password2: ''
 	})
+
 	const { name, email, password, password2 } = formData
 
 	const navigate = useNavigate()

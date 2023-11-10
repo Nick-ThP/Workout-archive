@@ -1,3 +1,4 @@
+import cors from 'cors'
 import dotenv from 'dotenv'
 import express, { Application } from 'express'
 import { connectDb } from './config/dbConnection'
@@ -13,6 +14,9 @@ dotenv.config()
 
 // Database connection
 connectDb()
+
+// Set up CORS
+app.use(cors)
 
 // Parsing
 app.use(express.json())

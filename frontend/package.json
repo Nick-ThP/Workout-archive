@@ -51,5 +51,6 @@
 		"autoprefixer": "^10.4.16",
 		"postcss": "^8.4.31",
 		"webpack": "^5.89.0"
-	}
+	},
+	"proxy": "http://localhost:3050"
 }

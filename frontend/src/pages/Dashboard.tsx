@@ -21,9 +21,15 @@ export const Dashboard = () => {
 		if (!user) {
 			navigate('/login')
 		}
-		dispatch(getWorkouts())
-		return () => {
-			dispatch(reset())
+
+		if (user) {
+			dispatch(getWorkouts())
+
+			return () => {
+				if (user) {
+					dispatch(reset())
+				}
+			}
 		}
 	}, [user, navigate, isError, message, dispatch])
 
