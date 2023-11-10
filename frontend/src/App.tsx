@@ -9,7 +9,7 @@ export function App() {
 	return (
 		<>
 			<Router>
-				<div className='container mx-auto bg-teal-400 h-16'>
+				<div>
 					<Header />
 					<Routes>
 						<Route path='/' element={<Dashboard />} />
