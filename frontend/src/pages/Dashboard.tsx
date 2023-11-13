@@ -18,19 +18,20 @@ export const Dashboard = () => {
 		if (isError) {
 			toast.error(message)
 		}
+
 		if (!user) {
 			navigate('/login')
 		}
 
 		if (user) {
 			dispatch(getWorkouts())
-
-			return () => {
-				if (user) {
-					dispatch(reset())
-				}
-			}
 		}
+
+		// return () => {
+		// 	if (user) {
+		// 		dispatch(reset())
+		// 	}
+		// }
 	}, [user, navigate, isError, message, dispatch])
 
 	if (isLoading) {

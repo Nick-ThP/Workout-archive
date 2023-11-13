@@ -1,6 +1,6 @@
 export interface Workout {
 	user_id?: string
-	calories: string
+	calories: number
 	createdAt?: Date
 	updatedAt?: Date
 }

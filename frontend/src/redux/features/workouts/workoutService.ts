@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { axiosConfigured } from '../../../utils/axios'
 import { Workout } from '../../../utils/types'
 
 // Get user workouts
@@ -8,7 +8,7 @@ const getWorkouts = async (token: string) => {
 			Authorization: `Bearer ${token}`
 		}
 	}
-	const response = await axios.get('/api/workouts/', config)
+	const response = await axiosConfigured.get('/api/workouts/', config)
 	return response.data
 }
 
@@ -19,7 +19,7 @@ const createWorkout = async (workoutData: Workout, token: string) => {
 			Authorization: `Bearer ${token}`
 		}
 	}
-	const response = await axios.post('/api/workouts/', workoutData, config)
+	const response = await axiosConfigured.post('/api/workouts/', workoutData, config)
 	return response.data
 }
 
@@ -30,7 +30,7 @@ const updateWorkout = async (workoutId: string, workoutData: Workout, token: str
 			Authorization: `Bearer ${token}`
 		}
 	}
-	const response = await axios.put('/api/workouts/' + workoutId, workoutData, config)
+	const response = await axiosConfigured.put('/api/workouts/' + workoutId, workoutData, config)
 	return response.data
 }
 
@@ -41,7 +41,7 @@ const deleteWorkout = async (workoutId: string, token: string) => {
 			Authorization: `Bearer ${token}`
 		}
 	}
-	const response = await axios.delete('/api/workouts/' + workoutId, config)
+	const response = await axiosConfigured.delete('/api/workouts/' + workoutId, config)
 	return response.data
 }
 

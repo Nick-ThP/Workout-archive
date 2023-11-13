@@ -1,6 +1,7 @@
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express, { Application } from 'express'
+import morgan from 'morgan'
 import { connectDb } from './config/dbConnection'
 import { errorMiddleware } from './middleware/errorMiddleware'
 import { userRouter } from './routes/userRouter'
@@ -16,7 +17,10 @@ dotenv.config()
 connectDb()
 
 // Set up CORS
-app.use(cors)
+app.use(cors())
+
+// Morgan for logging
+app.use(morgan('dev'))
 
 // Parsing
 app.use(express.json())
