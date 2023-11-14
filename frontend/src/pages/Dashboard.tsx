@@ -21,17 +21,13 @@ export const Dashboard = () => {
 
 		if (!user) {
 			navigate('/login')
-		}
-
-		if (user) {
+		} else {
 			dispatch(getWorkouts())
 		}
 
-		// return () => {
-		// 	if (user) {
-		// 		dispatch(reset())
-		// 	}
-		// }
+		return () => {
+			dispatch(reset())
+		}
 	}, [user, navigate, isError, message, dispatch])
 
 	if (isLoading) {

@@ -68,7 +68,12 @@ export const loginUser = asyncHandler(async (req, res) => {
 
 	// Compare user's password with hashed and create a token
 	if (user && (await bcrypt.compare(password, user.password))) {
-		res.status(200).json(generateToken({ username: user.username, id: user._id }))
+		res.status(200).json({
+			id: user.id,
+			username: user.username,
+			email: user.email,
+			token: generateToken({ username: user.username, id: user._id })
+		})
 	} else {
 		res.status(401)
 		throw new Error('Password is not valid')

@@ -7,15 +7,15 @@ import { login, reset } from '../redux/features/auth/authSlice'
 import { AppDispatch, RootState } from '../redux/store'
 
 export const Login = () => {
+	const navigate = useNavigate()
+	const dispatch = useDispatch<AppDispatch>()
+	const { user, isLoading, isError, isSuccess, message } = useSelector((state: RootState) => state.auth)
+
 	const [formData, setFormData] = useState({
 		email: '',
 		password: ''
 	})
 	const { email, password } = formData
-
-	const navigate = useNavigate()
-	const dispatch = useDispatch<AppDispatch>()
-	const { user, isLoading, isError, isSuccess, message } = useSelector((state: RootState) => state.auth)
 
 	useEffect(() => {
 		if (isError) {

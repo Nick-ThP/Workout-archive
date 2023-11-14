@@ -1,7 +1,9 @@
+import { MoonLoader } from 'react-spinners'
+
 export const Spinner = () => {
 	return (
-		<div className='loadingSpinnerContainer'>
-			<div className='loadingSpinner'></div>
+		<div className='loading-spinner-container'>
+			<MoonLoader />
 		</div>
 	)
 }

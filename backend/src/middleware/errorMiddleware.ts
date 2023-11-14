@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { constants } from '../utils/constants'
 
-export const errorMiddleware = (err: Error, req: Request, res: Response, next: NextFunction) => {
+export const errorMiddleware = (err: Error, req: Request, res: Response) => {
 	const statusCode = res.statusCode || 500
 
 	switch (statusCode) {
