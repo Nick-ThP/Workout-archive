@@ -1,20 +1,23 @@
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { createWorkout } from '../redux/features/workouts/workoutSlice'
 import { AppDispatch } from '../redux/store'
 
-export const WorkoutForm = () => {
-	const [calories, setCalories] = useState('')
+type Props = {
+	calories: number
+	setCalories: (state: number) => void
+}
+
+export const WorkoutForm = (props: Props) => {
 	const dispatch = useDispatch<AppDispatch>()
 
 	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		let numCalories: number = +calories
+		let numCalories: number = +props.calories
 		if (typeof numCalories === 'number') {
 			dispatch(createWorkout({ calories: numCalories }))
 
-			return setCalories('')
+			return props.setCalories(0)
 		}
 
 		toast.error('Please submit a number instead')
@@ -29,13 +32,13 @@ export const WorkoutForm = () => {
 						name='calories'
 						id='calories'
 						placeholder='Specify calories'
-						value={calories}
-						onChange={(e) => setCalories(e.target.value)}
+						value={props.calories}
+						onChange={(e) => props.setCalories(+e.target.value)}
 					/>
 				</div>
 				<div className='form-group'>
 					<button className='btn btn-block' type='submit'>
-						Pin Goal
+						Archive workout
 					</button>
 				</div>
 			</form>
