@@ -1,8 +1,8 @@
 export interface Workout {
 	user_id?: string
-	calories: number
-	createdAt?: Date
-	updatedAt?: Date
+	muscleGroup: 'Chest' | 'Shoulders' | 'Back' | 'Arms' | 'Legs' | 'Core'
+	reps: number
+	sets: number
 }
 
 export interface CreatedWorkout extends Workout {

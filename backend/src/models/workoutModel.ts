@@ -7,9 +7,21 @@ const workoutSchema = new Schema(
 			required: true,
 			ref: 'User'
 		},
+		muscleGroup: {
+			type: String,
+			required: [true, 'Please choose a muscle group']
+		},
+		sets: {
+			type: Number,
+			required: [true, 'Please specify sets']
+		},
+		reps: {
+			type: Number,
+			required: [true, 'Please specify reps']
+		},
 		calories: {
 			type: Number,
-			required: [true, 'Please specify amount of calories burned']
+			required: true
 		}
 	},
 	{

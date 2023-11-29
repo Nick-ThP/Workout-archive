@@ -16,17 +16,23 @@ export const getWorkouts = asyncHandler(async (req: ExtendedRequest, res) => {
 //@access private
 export const createWorkout = asyncHandler(async (req: ExtendedRequest, res) => {
 	// Grab the keys from body object
-	const { calories } = req.body
+	const { muscleGroup, sets, reps } = req.body
 
 	// Check for mandatory information
-	if (!calories) {
+	if (!muscleGroup || !sets || !reps) {
 		res.status(400)
 		throw new Error('All fields are mandatory')
 	}
 
+	// Calculate calories
+	const calories = sets * reps * (Math.random() + 5)
+
 	// Create the workout in the database
 	const workout = await Workout.create({
 		user_id: req.user?.id,
+		muscleGroup,
+		sets,
+		reps,
 		calories
 	})
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -13,7 +13,6 @@ export const Dashboard = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { user } = useSelector((state: RootState) => state.auth)
 	const { workouts, isLoading, isError, message } = useSelector((state: RootState) => state.workouts)
-	const [calories, setCalories] = useState(0)
 
 	useEffect(() => {
 		if (isError) {
@@ -41,12 +40,12 @@ export const Dashboard = () => {
 				<h1 className='flex'>Welcome {user && user.username}</h1>
 				<p>Workouts Dashboard</p>
 			</section>
-			<WorkoutForm calories={calories} setCalories={setCalories} />
+			<WorkoutForm submitType={'createOnSubmit'} />
 			<section className='content'>
 				{workouts.length > 0 ? (
 					<div className='workouts'>
 						{workouts.map((workout) => (
-							<WorkoutItem key={workout._id} workout={workout} calories={calories} />
+							<WorkoutItem key={workout._id} id={workout._id} workout={workout} />
 						))}
 					</div>
 				) : (
