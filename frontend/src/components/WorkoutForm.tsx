@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import { createWorkout, updateWorkout } from '../redux/features/workouts/workoutSlice'
+import { createWorkout, getWorkouts, updateWorkout } from '../redux/features/workouts/workoutSlice'
 import { AppDispatch } from '../redux/store'
-import { Workout } from '../utils/types'
+import { CreatedWorkout, Workout } from '../utils/types'
 
 type CreateProps = {
 	submitType: 'createOnSubmit'
@@ -12,15 +12,24 @@ type CreateProps = {
 type PutProps = {
 	submitType: 'putOnSubmit'
 	id: string
+	initialState: CreatedWorkout
 }
 
 export const WorkoutForm = (props: CreateProps | PutProps) => {
 	const dispatch = useDispatch<AppDispatch>()
-	const [formData, setFormData] = useState<Workout>({
-		muscleGroup: 'Chest',
-		sets: 0,
-		reps: 0
-	})
+	const [formData, setFormData] = useState<Workout>(
+		props.submitType === 'putOnSubmit'
+			? {
+					muscleGroup: props.initialState.muscleGroup,
+					sets: props.initialState.sets,
+					reps: props.initialState.reps
+			  }
+			: {
+					muscleGroup: 'Chest',
+					sets: 0,
+					reps: 0
+			  }
+	)
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
 		setFormData((prevState) => ({
@@ -29,31 +38,32 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 		}))
 	}
 
-	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+	const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
-		if (!Object.values(formData).some((value) => value === 0 || value === '')) {
+		if (!Object.values(formData).some((value) => value === 0)) {
 			if (props.submitType === 'putOnSubmit') {
-				dispatch(updateWorkout({ workoutId: props.id, workoutData: formData }))
+				await dispatch(updateWorkout({ workoutId: props.id, workoutData: formData }))
 			}
 
 			if (props.submitType === 'createOnSubmit') {
-				dispatch(createWorkout(formData))
+				await dispatch(createWorkout(formData))
+				setFormData({
+					muscleGroup: 'Chest',
+					sets: 0,
+					reps: 0
+				})
 			}
 
-			return setFormData({
-				muscleGroup: 'Chest',
-				sets: 0,
-				reps: 0
-			})
+			return dispatch(getWorkouts())
 		}
 
-		toast.error('Please submit a number instead')
+		toast.error('Please fill out all fields')
 	}
 
 	return (
 		<section className='form'>
-			<form onSubmit={submitHandler}>
+			<form onSubmit={submitHandler} method='dialog'>
 				<div className='form-group'>
 					<select
 						id='muscle-group'

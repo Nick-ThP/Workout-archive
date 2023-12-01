@@ -32,7 +32,7 @@ export const WorkoutItem = (props: Props) => {
 				<FaTimesCircle />
 			</button>
 			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-				<WorkoutForm submitType={'putOnSubmit'} id={props.id} />
+				<WorkoutForm submitType={'putOnSubmit'} id={props.id} initialState={props.workout} />
 			</Modal>
 		</div>
 	)

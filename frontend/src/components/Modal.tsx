@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef } from 'react'
+import React, { ReactNode, useEffect, useRef } from 'react'
 
 interface Props {
 	children: ReactNode
@@ -11,7 +11,14 @@ export const Modal = ({ children, isOpen, onClose }: Props) => {
 
 	const handleClose = () => {
 		onClose()
+		dialogRef.current?.close()
 	}
+
+	useEffect(() => {
+		if (isOpen) {
+			dialogRef.current?.showModal()
+		}
+	}, [isOpen])
 
 	return (
 		<>
