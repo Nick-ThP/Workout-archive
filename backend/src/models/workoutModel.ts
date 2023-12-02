@@ -1,5 +1,32 @@
 import mongoose, { Schema } from 'mongoose'
 
+const movementSchema = new Schema({
+	name: {
+		type: String,
+		required: true
+	},
+	area: {
+		type: String,
+		required: true
+	},
+	targetedMuscle: {
+		type: Array,
+		required: true
+	}
+})
+
+const exerciseSchema = new Schema({
+	movement: [movementSchema],
+	sets: {
+		type: Number,
+		required: true
+	},
+	reps: {
+		type: Number,
+		required: true
+	}
+})
+
 const workoutSchema = new Schema(
 	{
 		user_id: {
@@ -7,18 +34,7 @@ const workoutSchema = new Schema(
 			required: true,
 			ref: 'User'
 		},
-		muscleGroup: {
-			type: String,
-			required: [true, 'Please choose a muscle group']
-		},
-		sets: {
-			type: Number,
-			required: [true, 'Please specify sets']
-		},
-		reps: {
-			type: Number,
-			required: [true, 'Please specify reps']
-		},
+		exercises: [exerciseSchema],
 		calories: {
 			type: Number,
 			required: true
