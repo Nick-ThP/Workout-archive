@@ -16,7 +16,7 @@ const movementSchema = new Schema({
 })
 
 const exerciseSchema = new Schema({
-	movement: [movementSchema],
+	movement: movementSchema,
 	sets: {
 		type: Number,
 		required: true

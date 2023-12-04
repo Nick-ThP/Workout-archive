@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import exercises from '../data/exercises.json'
 import { createWorkout, getWorkouts, updateWorkout } from '../redux/features/workouts/workoutSlice'
 import { AppDispatch } from '../redux/store'
-import { CreatedWorkout, Exercise, Movement, Workout } from '../utils/types'
+import { CreatedWorkout, Exercise, ExerciseForm, Movement } from '../utils/types'
 import Modal from './Modal'
 
 type CreateProps = {
@@ -20,39 +20,30 @@ type PutProps = {
 export const WorkoutForm = (props: CreateProps | PutProps) => {
 	const dispatch = useDispatch<AppDispatch>()
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-	const [exerciseForm, setExerciseForm] = useState<Exercise>({
-		movement: exercises[0] as Movement,
+	const [workout, setWorkout] = useState<Exercise[]>(props.submitType === 'putOnSubmit' ? props.initialState.exercises : [])
+	const [exerciseForm, setExerciseForm] = useState<ExerciseForm>({
+		movementName: '',
 		sets: 0,
 		reps: 0
 	})
-	const [workout, setWorkout] = useState<Workout>(
-		props.submitType === 'putOnSubmit'
-			? {
-					exercises: props.initialState.exercises
-			  }
-			: {
-					exercises: []
-			  }
-	)
+	console.log('📡✨ ~ file: WorkoutForm.tsx:29 ~ WorkoutForm ~ exerciseForm:', exerciseForm)
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-		setWorkout((prevState) => ({
+		setExerciseForm((prevState) => ({
 			...prevState,
 			[e.target.name]: e.target.value
 		}))
 	}
 
 	const archiveWorkout = async () => {
-		if (workout.exercises.length > 0) {
+		if (workout.length > 0) {
 			if (props.submitType === 'putOnSubmit') {
-				await dispatch(updateWorkout({ workoutId: props.id, workoutData: workout }))
+				await dispatch(updateWorkout({ workoutId: props.id, workoutData: { exercises: workout } }))
 			}
 
 			if (props.submitType === 'createOnSubmit') {
-				await dispatch(createWorkout(workout))
-				setWorkout({
-					exercises: []
-				})
+				await dispatch(createWorkout({ exercises: workout }))
+				setWorkout([])
 			}
 
 			return dispatch(getWorkouts())
@@ -61,17 +52,29 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 		toast.error('Please include exercises in your workout')
 	}
 
-	const exerciseSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+	const workoutSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		if (workout.exercises.find((exercise) => exercise.movement.name === exerciseForm?.movement.name)) {
+		if (Object.values(exerciseForm).some((value) => value === 0 || '')) {
+			return toast.error('Fill out all fields before adding an exercise')
+		}
+
+		if (workout.find((exercise) => exercise.movement.name === exerciseForm?.movementName)) {
 			return toast.error('You cannot add the same exercise twice')
 		}
 
-		setWorkout((prev) => ({
-			exercises: [...prev.exercises, exerciseForm]
-		}))
+		const foundMovement = exercises.find((exercise) => exercise.name === exerciseForm.movementName)
+		if (!foundMovement) return toast.error('You need an eligible movement to continue')
+
+		const assembledExercise: Exercise | ExerciseForm = {
+			sets: exerciseForm.sets,
+			reps: exerciseForm.reps,
+			movement: foundMovement as Movement
+		}
+
+		setWorkout((prevState) => [...prevState, assembledExercise])
+
 		setExerciseForm({
-			movement: exercises[0] as Movement,
+			movementName: '',
 			sets: 0,
 			reps: 0
 		})
@@ -79,38 +82,40 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 
 	return (
 		<>
-			<h2>Exercises</h2>
-			<ul style={{ display: 'flex' }}>
-				{workout.exercises.map((exercise) => (
-					<li style={{ width: '20px', display: 'flex', flexDirection: 'column' }}>
-						<p>{exercise.movement.name}</p>
-						<p>{exercise.movement.area}</p>
-						<p>{exercise.reps}</p>
-						<p>{exercise.sets}</p>
+			<h2>workout</h2>
+			<ul className='flex gap-2 justify-start'>
+				{workout.map((exercise) => (
+					<li className='flex flex-col'>
+						<div>{exercise.movement.name}</div>
+						<div>{exercise.movement.area}</div>
+						<div>{exercise.reps}</div>
+						<div>{exercise.sets}</div>
 					</li>
 				))}
 			</ul>
-			<div style={{ display: 'flex', gap: '10px' }}>
+			<div className='flex gap-4'>
 				<button onClick={() => setIsModalOpen(true)}>Add Exercise</button>
 				<button onClick={archiveWorkout}>Archive Workout</button>
 			</div>
 			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-				<section className='form'>
-					<form onSubmit={exerciseSubmitHandler} method='dialog'>
+				<section className='form bg-slate-800'>
+					<form onSubmit={workoutSubmitHandler} method='dialog'>
 						<div className='form-group'>
 							<select
 								id='muscle-group'
-								name='muscleGroup'
+								name='movementName'
 								placeholder='Choose a muscle group'
 								onChange={onChange}
-								value={exerciseForm.movement.name}
+								value={exerciseForm.movementName}
 							>
-								<option value='Chest'>Chest</option>
-								<option value='Shoulders'>Shoulders</option>
-								<option value='Back'>Back</option>
-								<option value='Arms'>Arms</option>
-								<option value='Legs'>Legs</option>
-								<option value='Core'>Core</option>
+								<option value='' disabled selected>
+									Choose a muscle group
+								</option>
+								{exercises.map((exercise, index) => (
+									<option key={index} value={exercise.name}>
+										{exercise.name}
+									</option>
+								))}
 							</select>
 						</div>
 						<div className='form-group'>

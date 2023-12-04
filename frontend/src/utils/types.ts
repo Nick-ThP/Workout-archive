@@ -1,5 +1,4 @@
 export interface Workout {
-	user_id?: string
 	exercises: Exercise[]
 }
 
@@ -7,6 +6,10 @@ export interface Exercise {
 	movement: Movement
 	reps: number
 	sets: number
+}
+
+export interface ExerciseForm extends Omit<Exercise, 'movement'> {
+	movementName: string
 }
 
 export interface Movement {
@@ -17,6 +20,7 @@ export interface Movement {
 
 export interface CreatedWorkout extends Workout {
 	_id: string
+	user_id?: string
 	createdAt: Date
 	updatedAt?: Date
 	calories: number

@@ -1,9 +1,9 @@
+import { useState } from 'react'
 import { FaTimesCircle, FaWrench } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { deleteWorkout, getWorkouts } from '../redux/features/workouts/workoutSlice'
 import { AppDispatch } from '../redux/store'
 import { CreatedWorkout } from '../utils/types'
-import { useState } from 'react'
 import { Modal } from './Modal'
 import { WorkoutForm } from './WorkoutForm'
 
@@ -24,7 +24,16 @@ export const WorkoutItem = (props: Props) => {
 	return (
 		<div className='workout'>
 			<div className='date'>{new Date(props.workout.createdAt).toLocaleString('en-GB', { timeZone: 'UTC' })}</div>
-			<h2>{props.workout.muscleGroup.toString()}</h2>
+			<div className='flex flex-col gap-4 max-w-min'>
+				{props.workout.exercises.map((exercise, idx) => (
+					<div key={idx} className='flex gap-4'>
+						<div>{exercise.movement.name}</div>
+						<div>{exercise.movement.area}</div>
+						<div>{exercise.sets}</div>
+						<div>{exercise.reps}</div>
+					</div>
+				))}
+			</div>
 			<button onClick={() => setIsModalOpen(true)} className='change'>
 				<FaWrench />
 			</button>
