@@ -7,21 +7,29 @@ const movementSchema = new Schema({
 	},
 	area: {
 		type: String,
+		enum: ['Chest', 'Shoulders', 'Back', 'Arms', 'Legs', 'Core'],
 		required: true
 	},
 	targetedMuscle: {
-		type: Array,
+		type: [String],
 		required: true
 	}
 })
 
 const exerciseSchema = new Schema({
-	movement: movementSchema,
+	movement: {
+		type: movementSchema,
+		required: true
+	},
+	reps: {
+		type: Number,
+		required: true
+	},
 	sets: {
 		type: Number,
 		required: true
 	},
-	reps: {
+	calories: {
 		type: Number,
 		required: true
 	}
@@ -29,12 +37,15 @@ const exerciseSchema = new Schema({
 
 const workoutSchema = new Schema(
 	{
+		exercises: {
+			type: [exerciseSchema],
+			required: true
+		},
 		user_id: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: true,
 			ref: 'User'
 		},
-		exercises: [exerciseSchema],
 		calories: {
 			type: Number,
 			required: true

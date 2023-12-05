@@ -6,6 +6,7 @@ export interface Exercise {
 	movement: Movement
 	reps: number
 	sets: number
+	calories?: number
 }
 
 export interface ExerciseForm extends Omit<Exercise, 'movement'> {

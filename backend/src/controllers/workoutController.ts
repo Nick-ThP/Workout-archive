@@ -16,43 +16,28 @@ export const getWorkouts = asyncHandler(async (req: ExtendedRequest, res) => {
 //@access private
 export const createWorkout = asyncHandler(async (req: ExtendedRequest, res) => {
 	// Grab the keys from body object
-	const { exercises } = req.body
-	console.log(exercises)
+	const { exercises }: { exercises: Exercise[] } = req.body
 
 	// Check for mandatory information
 	if (exercises.length === 0) {
 		res.status(400)
-		throw new Error('All fields are mandatory')
+		throw new Error('Provide at least one exercise')
 	}
 
-	// Calculate exercise calories
-	const exercisesWithCalories = exercises.map((exercise: Exercise) => {
-		if (typeof exercise.sets !== 'number' && typeof exercise.reps !== 'number') {
+	// Check for all properties on each exercise
+	for (const exercise of exercises) {
+		const { movement, sets, reps } = exercise
+
+		if (!movement || !sets || !reps) {
 			res.status(400)
-			throw new Error('Provide sets and reps as valid numbers on all exercises')
+			throw new Error('Provide all required properties on each exercise')
 		}
-
-		return {
-			...exercise,
-			calories: exercise.sets * exercise.reps
-		}
-	})
-
-	// Calculate workout calories
-	const workoutCalories = exercisesWithCalories.reduce((acc: number, obj: Exercise) => {
-		if (!obj.calories) {
-			res.status(400)
-			throw new Error('Something is wrong with the provided data')
-		}
-
-		return acc + obj.calories
-	}, 0)
+	}
 
 	// Create the workout in the database
 	const workout = await Workout.create({
-		user_id: req.user?.id,
-		exercises: exercisesWithCalories,
-		calories: workoutCalories
+		...req.body,
+		user_id: req.user?.id
 	})
 
 	// Send back the workout
@@ -90,6 +75,25 @@ export const getWorkout = asyncHandler(async (req: ExtendedRequest, res) => {
 //@route PUT /api/workouts/:id
 //@access private
 export const updateWorkout = asyncHandler(async (req: ExtendedRequest, res) => {
+	// Grab the keys from body object
+	const { exercises }: { exercises: Exercise[] } = req.body
+
+	// Check for mandatory information
+	if (exercises.length === 0) {
+		res.status(400)
+		throw new Error('Provide at least one exercise')
+	}
+
+	// Check for all properties on each exercise
+	for (const exercise of exercises) {
+		const { movement, sets, reps } = exercise
+
+		if (!movement || !sets || !reps) {
+			res.status(400)
+			throw new Error('Provide all required properties on each exercise')
+		}
+	}
+
 	// Check for workout
 	const workout = await Workout.findById(req.params.id)
 	if (!workout) {

@@ -26,7 +26,6 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 		sets: 0,
 		reps: 0
 	})
-	console.log('📡✨ ~ file: WorkoutForm.tsx:29 ~ WorkoutForm ~ exerciseForm:', exerciseForm)
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
 		setExerciseForm((prevState) => ({
