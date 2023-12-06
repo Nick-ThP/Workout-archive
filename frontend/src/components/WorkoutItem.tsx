@@ -22,27 +22,41 @@ export const WorkoutItem = (props: Props) => {
 	}
 
 	return (
-		<div className='workout'>
-			<div className='date'>{new Date(props.workout.createdAt).toLocaleString('en-GB', { timeZone: 'UTC' })}</div>
-			<div className='flex flex-col gap-4 max-w-min'>
-				{props.workout.exercises.map((exercise, idx) => (
-					<div key={idx} className='flex gap-4'>
-						<div>{exercise.movement.name}</div>
-						<div>{exercise.movement.area}</div>
-						<div>{exercise.sets}</div>
-						<div>{exercise.reps}</div>
-					</div>
-				))}
+		<>
+			<div className='workout'>
+				<div className='date'>{new Date(props.workout.createdAt).toLocaleString('en-GB', { timeZone: 'UTC' })}</div>
+				<div>This workout burned {props.workout.calories} calories</div>
+				<ul className='flex gap-5'>
+					{props.workout.exercises.map((exercise, idx) => (
+						<li key={idx} className='bg-teal-100 p-8 flex justify-center items-start flex-col gap text-start relative'>
+							<div>
+								Exercise name: <b>{exercise.movement.name}</b>
+							</div>
+							<div>
+								Targeted area: <b>{exercise.movement.area}</b>
+							</div>
+							<div>
+								Amount of reps: <b>{exercise.reps}</b>
+							</div>
+							<div>
+								Amount of sets: <b>{exercise.sets}</b>
+							</div>
+							<div>
+								Burned calories: <b>{exercise.calories}</b>
+							</div>
+						</li>
+					))}
+				</ul>
+				<button onClick={() => setIsModalOpen(true)} className='change'>
+					<FaWrench />
+				</button>
+				<button onClick={deleteHandler} className='close'>
+					<FaTimesCircle />
+				</button>
 			</div>
-			<button onClick={() => setIsModalOpen(true)} className='change'>
-				<FaWrench />
-			</button>
-			<button onClick={deleteHandler} className='close'>
-				<FaTimesCircle />
-			</button>
 			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
 				<WorkoutForm submitType={'putOnSubmit'} id={props.id} initialState={props.workout} />
 			</Modal>
-		</div>
+		</>
 	)
 }

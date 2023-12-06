@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FaTimesCircle } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import exercises from '../data/exercises.json'
@@ -51,7 +52,7 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 		toast.error('Please include exercises in your workout')
 	}
 
-	const workoutSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+	const exerciseSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		if (Object.values(exerciseForm).some((value) => value === 0 || '')) {
 			return toast.error('Fill out all fields before adding an exercise')
@@ -71,7 +72,7 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 		}
 
 		setWorkout((prevState) => [...prevState, assembledExercise])
-
+		setIsModalOpen(false)
 		setExerciseForm({
 			movementName: '',
 			sets: 0,
@@ -79,26 +80,47 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 		})
 	}
 
+	const removeExercise = (name: string) => {
+		setWorkout((prev) => prev.filter((exercise) => exercise.movement.name !== name))
+	}
+
 	return (
 		<>
-			<h2>workout</h2>
-			<ul className='flex gap-2 justify-start'>
-				{workout.map((exercise) => (
-					<li className='flex flex-col'>
-						<div>{exercise.movement.name}</div>
-						<div>{exercise.movement.area}</div>
-						<div>{exercise.reps}</div>
-						<div>{exercise.sets}</div>
-					</li>
-				))}
-			</ul>
-			<div className='flex gap-4'>
-				<button onClick={() => setIsModalOpen(true)}>Add Exercise</button>
-				<button onClick={archiveWorkout}>Archive Workout</button>
-			</div>
+			<section className='flex justify-center items-center flex-col gap-5'>
+				<h2>{props.submitType === 'createOnSubmit' ? 'Create a new workout' : 'Edit workout'}</h2>
+				<ul className='flex gap-5'>
+					{workout.map((exercise, idx) => (
+						<li key={idx} className='bg-teal-100 p-8 flex justify-center items-start flex-col gap text-start relative'>
+							<div>
+								Exercise name: <b>{exercise.movement.name}</b>
+							</div>
+							<div>
+								Targeted area: <b>{exercise.movement.area}</b>
+							</div>
+							<div>
+								Amount of reps: <b>{exercise.reps}</b>
+							</div>
+							<div>
+								Amount of sets: <b>{exercise.sets}</b>
+							</div>
+							<button onClick={() => removeExercise(exercise.movement.name)} className='close'>
+								<FaTimesCircle />
+							</button>
+						</li>
+					))}
+				</ul>
+				<div className='flex gap-5'>
+					<button className='btn' onClick={() => setIsModalOpen(true)}>
+						Add Exercise
+					</button>
+					<button className='btn' onClick={archiveWorkout}>
+						Archive Workout
+					</button>
+				</div>
+			</section>
 			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-				<section className='form bg-slate-800'>
-					<form onSubmit={workoutSubmitHandler} method='dialog'>
+				<section className='form'>
+					<form onSubmit={exerciseSubmitHandler} method='dialog'>
 						<div className='form-group'>
 							<select
 								id='muscle-group'

@@ -37,10 +37,15 @@ export const Dashboard = () => {
 	return (
 		<>
 			<section className='heading'>
-				<h1 className='flex'>Welcome {user && user.username}</h1>
+				<h1 className='flex justify-center'>
+					Welcome {user && user.username && user.username?.charAt(0).toUpperCase() + user.username?.slice(1)}
+				</h1>
 				<p>Workouts Dashboard</p>
 			</section>
 			<WorkoutForm submitType={'createOnSubmit'} />
+			<br />
+			<hr style={{ borderTop: '1px solid black' }} />
+			<br />
 			<section className='content'>
 				{workouts.length > 0 ? (
 					<div className='workouts'>

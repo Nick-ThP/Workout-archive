@@ -23,7 +23,7 @@ export const Header = () => {
 			<ul>
 				{user ? (
 					<li className='flex'>
-						<button className='bg' onClick={onLogout}>
+						<button className='btn' onClick={onLogout}>
 							<FaSignOutAlt /> Log out
 						</button>
 					</li>

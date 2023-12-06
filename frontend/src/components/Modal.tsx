@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect, useRef } from 'react'
+import { FaTimesCircle } from 'react-icons/fa'
 
 interface Props {
 	children: ReactNode
@@ -25,7 +26,9 @@ export const Modal = ({ children, isOpen, onClose }: Props) => {
 			{isOpen && (
 				<dialog ref={dialogRef}>
 					{children}
-					<button onClick={handleClose}>Close</button>
+					<button onClick={handleClose} className='close'>
+						<FaTimesCircle />
+					</button>
 				</dialog>
 			)}
 		</>
