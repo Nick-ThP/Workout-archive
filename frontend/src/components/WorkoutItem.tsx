@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FaTimesCircle, FaWrench } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { deleteWorkout, getWorkouts } from '../redux/features/workouts/workoutSlice'
 import { AppDispatch } from '../redux/store'
 import { CreatedWorkout } from '../utils/types'
@@ -13,6 +14,7 @@ type Props = {
 }
 
 export const WorkoutItem = (props: Props) => {
+	const navigate = useNavigate()
 	const dispatch = useDispatch<AppDispatch>()
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -23,7 +25,7 @@ export const WorkoutItem = (props: Props) => {
 
 	return (
 		<>
-			<div className='workout'>
+			<div className='workout' onClick={() => navigate(`/Workout/${props.id}`)}>
 				<div className='date'>{new Date(props.workout.createdAt).toLocaleString('en-GB', { timeZone: 'UTC' })}</div>
 				<div>This workout burned {props.workout.calories} calories</div>
 				<ul className='flex gap-5'>
@@ -55,7 +57,12 @@ export const WorkoutItem = (props: Props) => {
 				</button>
 			</div>
 			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-				<WorkoutForm submitType={'putOnSubmit'} id={props.id} initialState={props.workout} />
+				<WorkoutForm
+					submitType={'putOnSubmit'}
+					id={props.id}
+					initialState={props.workout}
+					closeModal={() => setIsModalOpen(false)}
+				/>
 			</Modal>
 		</>
 	)

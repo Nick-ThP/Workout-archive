@@ -3,7 +3,7 @@ import { FaTimesCircle } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import exercises from '../data/exercises.json'
-import { createWorkout, getWorkouts, updateWorkout } from '../redux/features/workouts/workoutSlice'
+import { createWorkout, getWorkout, getWorkouts, updateWorkout } from '../redux/features/workouts/workoutSlice'
 import { AppDispatch } from '../redux/store'
 import { CreatedWorkout, Exercise, ExerciseForm, Movement } from '../utils/types'
 import Modal from './Modal'
@@ -16,6 +16,7 @@ type PutProps = {
 	submitType: 'putOnSubmit'
 	id: string
 	initialState: CreatedWorkout
+	closeModal: () => void
 }
 
 export const WorkoutForm = (props: CreateProps | PutProps) => {
@@ -39,6 +40,8 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 		if (workout.length > 0) {
 			if (props.submitType === 'putOnSubmit') {
 				await dispatch(updateWorkout({ workoutId: props.id, workoutData: { exercises: workout } }))
+				props.closeModal()
+				dispatch(getWorkout(props.id))
 			}
 
 			if (props.submitType === 'createOnSubmit') {
@@ -46,7 +49,8 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 				setWorkout([])
 			}
 
-			return dispatch(getWorkouts())
+			dispatch(getWorkouts())
+			return
 		}
 
 		toast.error('Please include exercises in your workout')

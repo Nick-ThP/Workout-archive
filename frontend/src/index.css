@@ -124,7 +124,15 @@ h2 {
 	margin-top: 10px;
 }
 
-.close {
+.close:hover,
+.change:hover,
+.back:hover {
+	opacity: 1;
+}
+
+.close,
+.change,
+.back {
 	position: absolute;
 	top: 10px;
 	right: 10px;
@@ -136,24 +144,12 @@ h2 {
 	opacity: 0.5;
 }
 
-.close:hover {
-	opacity: 1;
-}
-
-.workout .change {
-	position: absolute;
-	top: 10px;
+.change {
 	right: 40px;
-	cursor: pointer;
-	border: none;
-	background: none;
-	font-size: 1.2rem;
-	font-weight: bold;
-	opacity: 0.5;
 }
 
-.workout .change:hover {
-	opacity: 1;
+.back {
+	right: 70px;
 }
 
 .date {

@@ -12,6 +12,17 @@ const getWorkouts = async (token: string) => {
 	return response.data
 }
 
+// Get specific workout
+const getWorkout = async (id: string, token: string) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`
+		}
+	}
+	const response = await axiosConfigured.get(`/api/workouts/${id}`, config)
+	return response.data
+}
+
 // Create new workout
 const createWorkout = async (workoutData: Workout, token: string) => {
 	const config = {
@@ -46,8 +57,9 @@ const deleteWorkout = async (workoutId: string, token: string) => {
 }
 
 export const workoutService = {
-	createWorkout,
 	getWorkouts,
+	getWorkout,
+	createWorkout,
 	updateWorkout,
 	deleteWorkout
 }

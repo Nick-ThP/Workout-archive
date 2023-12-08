@@ -1,5 +1,6 @@
 export interface Workout {
 	exercises: Exercise[]
+	id?: string
 }
 
 export interface Exercise {
@@ -35,7 +36,7 @@ export interface User {
 	token?: string
 }
 
-export interface workoutPutPackage {
+export interface WorkoutPutPackage {
 	workoutData: Workout
 	workoutId: string
 }
