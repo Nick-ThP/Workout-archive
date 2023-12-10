@@ -114,6 +114,9 @@ h2 {
 	padding: 20px 0 10px 10px;
 	position: relative;
 	box-shadow: 1px 1px 3px black;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
 }
 
 .workout:last-child {
@@ -160,6 +163,11 @@ h2 {
 .form,
 .content {
 	width: min(700px, 90%);
+	margin: 0 auto;
+}
+
+.workout-content {
+	width: min(1200px, 90%);
 	margin: 0 auto;
 }
 

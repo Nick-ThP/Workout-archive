@@ -29,7 +29,7 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 		reps: 0
 	})
 
-	const onChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+	const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		setExerciseForm((prevState) => ({
 			...prevState,
 			[e.target.name]: e.target.value
@@ -37,7 +37,7 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 	}
 
 	const archiveWorkout = async () => {
-		if (workout.length > 0) {
+		if (workout.length !== 0) {
 			if (props.submitType === 'putOnSubmit') {
 				await dispatch(updateWorkout({ workoutId: props.id, workoutData: { exercises: workout } }))
 				props.closeModal()
@@ -69,13 +69,21 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 		const foundMovement = exercises.find((exercise) => exercise.name === exerciseForm.movementName)
 		if (!foundMovement) return toast.error('You need an eligible movement to continue')
 
-		const assembledExercise: Exercise | ExerciseForm = {
+		const assembledExercise: Exercise = {
 			sets: exerciseForm.sets,
 			reps: exerciseForm.reps,
 			movement: foundMovement as Movement
 		}
 
 		setWorkout((prevState) => [...prevState, assembledExercise])
+		closeAndInitializeExerciseModal()
+	}
+
+	const removeExercise = (name: string) => {
+		setWorkout((prev) => prev.filter((exercise) => exercise.movement.name !== name))
+	}
+
+	const closeAndInitializeExerciseModal = () => {
 		setIsModalOpen(false)
 		setExerciseForm({
 			movementName: '',
@@ -84,17 +92,13 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 		})
 	}
 
-	const removeExercise = (name: string) => {
-		setWorkout((prev) => prev.filter((exercise) => exercise.movement.name !== name))
-	}
-
 	return (
 		<>
-			<section className='flex justify-center items-center flex-col gap-5'>
+			<section className='flex justify-center items-center flex-col gap-4'>
 				<h2>{props.submitType === 'createOnSubmit' ? 'Create a new workout' : 'Edit workout'}</h2>
 				<ul className='flex gap-5'>
 					{workout.map((exercise, idx) => (
-						<li key={idx} className='bg-teal-100 p-8 flex justify-center items-start flex-col gap text-start relative'>
+						<li key={idx} className='bg-yellow-100 p-8 flex justify-center items-start flex-col gap text-start relative'>
 							<div>
 								Exercise name: <b>{exercise.movement.name}</b>
 							</div>
@@ -122,7 +126,7 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 					</button>
 				</div>
 			</section>
-			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+			<Modal isOpen={isModalOpen} onClose={closeAndInitializeExerciseModal}>
 				<section className='form'>
 					<form onSubmit={exerciseSubmitHandler} method='dialog'>
 						<div className='form-group'>
@@ -136,11 +140,13 @@ export const WorkoutForm = (props: CreateProps | PutProps) => {
 								<option value='' disabled selected>
 									Choose a muscle group
 								</option>
-								{exercises.map((exercise, index) => (
-									<option key={index} value={exercise.name}>
-										{exercise.name}
-									</option>
-								))}
+								{exercises
+									.filter((exercise) => !workout.find((addedExercise) => exercise.name === addedExercise.movement.name))
+									.map((exercise, index) => (
+										<option key={index} value={exercise.name}>
+											{exercise.name}
+										</option>
+									))}
 							</select>
 						</div>
 						<div className='form-group'>

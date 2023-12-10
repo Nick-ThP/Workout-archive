@@ -36,27 +36,26 @@ export const Dashboard = () => {
 
 	return (
 		<>
-			<section className='heading'>
-				<h1 className='flex justify-center'>
-					Welcome {user && user.username && user.username?.charAt(0).toUpperCase() + user.username?.slice(1)}
-				</h1>
-				<p>Workouts Dashboard</p>
-			</section>
-			<WorkoutForm submitType={'createOnSubmit'} />
-			<br />
-			<hr style={{ borderTop: '1px solid black' }} />
-			<br />
-			<section className='content'>
-				{workouts.length > 0 ? (
-					<div className='workouts'>
-						{workouts.map((workout) => (
-							<WorkoutItem key={workout._id} id={workout._id} workout={workout} />
-						))}
-					</div>
-				) : (
-					<h3>You have not archived any workouts</h3>
-				)}
-			</section>
+			<div className='flex flex-col gap-8'>
+				<section className='heading'>
+					<h1 className='flex justify-center'>
+						Welcome {user && user.username && user.username?.charAt(0).toUpperCase() + user.username?.slice(1)}
+					</h1>
+					<p>Workouts Dashboard</p>
+				</section>
+				<WorkoutForm submitType={'createOnSubmit'} />
+				<section className='workout-content'>
+					{workouts.length > 0 ? (
+						<div className='workouts'>
+							{workouts.map((workout) => (
+								<WorkoutItem key={workout._id} id={workout._id} workout={workout} />
+							))}
+						</div>
+					) : (
+						<h3 className='text-center'>You have not archived any workouts</h3>
+					)}
+				</section>
+			</div>
 		</>
 	)
 }

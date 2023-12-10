@@ -5,6 +5,12 @@ export const calorieMiddleware = asyncHandler(async (req: ExtendedRequest, res, 
 	// Grab properties from body object
 	const { exercises } = req.body
 
+	// Ensure exercises are available
+	if (!exercises || exercises.length === 0) {
+		res.status(400)
+		throw new Error('No exercises has been provided')
+	}
+
 	// Calculate exercise calories
 	const exercisesWithCalories = exercises.map((exercise: Exercise) => {
 		if (!exercise.sets || !exercise.reps) {

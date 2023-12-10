@@ -27,7 +27,7 @@ export function Workout(props: Props) {
 	const deleteHandler = async () => {
 		if (id) {
 			await dispatch(deleteWorkout(id))
-			toast.done('Workout deleted')
+			toast.info('Workout deleted')
 			return navigate('/')
 		}
 
@@ -43,7 +43,6 @@ export function Workout(props: Props) {
 			{workout && id && (
 				<div className='workout'>
 					<div className='date'>{new Date(workout.createdAt).toLocaleString('en-GB', { timeZone: 'UTC' })}</div>
-					<div>This workout burned {workout.calories} calories</div>
 					<ul className='flex gap-5'>
 						{workout.exercises.map((exercise, idx) => (
 							<li key={idx} className='bg-teal-100 p-8 flex justify-center items-start flex-col gap text-start relative'>
@@ -65,6 +64,7 @@ export function Workout(props: Props) {
 							</li>
 						))}
 					</ul>
+					<div className='p-5 self-center'>This workout burned {workout.calories} calories</div>
 					<button onClick={() => setIsModalOpen(true)} className='change'>
 						<FaWrench />
 					</button>

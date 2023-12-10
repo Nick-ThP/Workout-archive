@@ -13,5 +13,15 @@
 		"name": "Barbell Row",
 		"area": "Back",
 		"targetedMuscle": ["Trapezius", "Latissimus Dorsi", "Rear Deltoid"]
+	},
+	{
+		"name": "Hyperextension",
+		"area": "Back",
+		"targetedMuscle": ["Trapezius", "Lower Back", "Hamstring Muscles"]
+	},
+	{
+		"name": "Bicep Curl",
+		"area": "Arms",
+		"targetedMuscle": ["Biceps Brachii"]
 	}
 ]
