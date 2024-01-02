@@ -21,6 +21,11 @@ export interface Exercise {
 
 export interface Movement {
 	name: string
-	area: 'Chest' | 'Shoulders' | 'Back' | 'Arms' | 'Legs' | 'Core'
+	area: ['Chest' | 'Shoulders' | 'Back' | 'Arms' | 'Legs' | 'Core']
 	targetedMuscle: string[]
+}
+
+export interface MovementList {
+	movements: Movement[]
+	user_id: string
 }

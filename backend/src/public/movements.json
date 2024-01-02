@@ -1,27 +1,17 @@
 [
 	{
 		"name": "Bench Press",
-		"area": "Chest",
+		"area": ["Chest"],
 		"targetedMuscle": ["Pectoralis Muscles", "Front Deltoid", "Triceps Brachii"]
 	},
 	{
 		"name": "Squat",
-		"area": "Legs",
+		"area": ["Legs"],
 		"targetedMuscle": ["Quadriceps Femoris", "Gluteus Muscles", "Hamstring Muscles"]
 	},
 	{
-		"name": "Barbell Row",
-		"area": "Back",
+		"name": "Deadlift",
+		"area": ["Back", "Legs"],
 		"targetedMuscle": ["Trapezius", "Latissimus Dorsi", "Rear Deltoid"]
-	},
-	{
-		"name": "Hyperextension",
-		"area": "Back",
-		"targetedMuscle": ["Trapezius", "Lower Back", "Hamstring Muscles"]
-	},
-	{
-		"name": "Bicep Curl",
-		"area": "Arms",
-		"targetedMuscle": ["Biceps Brachii"]
 	}
 ]

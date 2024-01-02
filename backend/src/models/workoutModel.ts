@@ -1,20 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-
-const movementSchema = new Schema({
-	name: {
-		type: String,
-		required: true
-	},
-	area: {
-		type: String,
-		enum: ['Chest', 'Shoulders', 'Back', 'Arms', 'Legs', 'Core'],
-		required: true
-	},
-	targetedMuscle: {
-		type: [String],
-		required: true
-	}
-})
+import { movementSchema } from './movementModel'
 
 const exerciseSchema = new Schema({
 	movement: {
@@ -42,7 +27,7 @@ const workoutSchema = new Schema(
 			required: true
 		},
 		user_id: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: Schema.Types.ObjectId,
 			required: true,
 			ref: 'User'
 		},

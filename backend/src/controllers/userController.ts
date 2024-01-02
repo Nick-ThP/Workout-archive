@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt'
 import asyncHandler from 'express-async-handler'
+import MovementList from '../models/movementModel'
 import User from '../models/userModel'
+import defaultMovements from '../public/movements.json'
 import { generateToken } from '../utils/generateToken'
 import { ExtendedRequest } from '../utils/types'
 
@@ -29,21 +31,34 @@ export const registerUser = asyncHandler(async (req, res) => {
 	const user = await User.create({
 		username,
 		email,
-		password: hashedPassword
+		password: hashedPassword,
 	})
 
-	// Send a response with new user object including token
-	if (user) {
-		res.status(201).json({
-			id: user.id,
-			username: user.username,
-			email: user.email,
-			token: generateToken({ username, id: user._id })
-		})
-	} else {
+	// Check if user creation was successful
+	if (!user) {
 		res.status(400)
 		throw new Error('User data is not valid')
 	}
+
+	// Create an individual list of movements for the user
+	const movementList = await MovementList.create({
+		movements: defaultMovements,
+		user_id: user.id
+	})
+
+	// Check if the list was created successfully
+	if (!movementList) {
+		res.status(400)
+		throw new Error('Could not create list of movements for the user')
+	}
+
+	// Send a response with new user object including token
+	res.status(201).json({
+		id: user.id,
+		username: user.username,
+		email: user.email,
+		token: generateToken({ username, id: user.id })
+	})
 })
 
 //@desc Login user
@@ -72,7 +87,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 			id: user.id,
 			username: user.username,
 			email: user.email,
-			token: generateToken({ username: user.username, id: user._id })
+			token: generateToken({ username: user.username, id: user.id })
 		})
 	} else {
 		res.status(401)

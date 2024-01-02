@@ -4,6 +4,7 @@ import express, { Application } from 'express'
 import morgan from 'morgan'
 import { connectDb } from './config/dbConnection'
 import { errorMiddleware } from './middleware/errorMiddleware'
+import { movementRouter } from './routes/movementRouter'
 import { userRouter } from './routes/userRouter'
 import { workoutRouter } from './routes/workoutRouter'
 
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // Endpoints
 app.use('/api/users', userRouter)
+app.use('/api/movements', movementRouter)
 app.use('/api/workouts', workoutRouter)
 
 // Error middleware
