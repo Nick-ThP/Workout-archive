@@ -16,7 +16,7 @@ export interface ExerciseForm extends Omit<Exercise, 'movement'> {
 
 export interface Movement {
 	name: string
-	area: 'Chest' | 'Shoulders' | 'Back' | 'Arms' | 'Legs' | 'Core'
+	area: ['Chest' | 'Shoulders' | 'Back' | 'Arms' | 'Legs' | 'Core']
 	targetedMuscle: string[]
 }
 
